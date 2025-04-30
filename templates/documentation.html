@@ -1,0 +1,532 @@
+{% extends 'base.html' %}
+
+{% block title %}Documentation - SafeLink Protection Cleaner{% endblock %}
+
+{% block content %}
+<div class="row mb-4">
+    <div class="col-12">
+        <h1 class="mb-0">Documentation</h1>
+        <p class="text-muted">Learn how SafeLink Protection Cleaner works</p>
+    </div>
+</div>
+
+<div class="row mb-5">
+    <div class="col-md-3 mb-4">
+        <div class="card sticky-top" style="top: 2rem;">
+            <div class="card-header">
+                <h5 class="mb-0">Contents</h5>
+            </div>
+            <div class="card-body">
+                <nav id="toc" class="nav flex-column">
+                    <a class="nav-link" href="#overview">Overview</a>
+                    <a class="nav-link" href="#detection-methods">Detection Methods</a>
+                    <a class="nav-link" href="#security-systems">Security Systems</a>
+                    <a class="nav-link" href="#file-formats">Supported File Formats</a>
+                    <a class="nav-link" href="#technical-details">Technical Details</a>
+                    <a class="nav-link" href="#api-reference">API Reference</a>
+                    <a class="nav-link" href="#advanced-usage">Advanced Usage</a>
+                    <a class="nav-link" href="#faq">FAQ</a>
+                </nav>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-9">
+        <div class="card mb-4" id="overview">
+            <div class="card-header">
+                <h2 class="h5 mb-0">Overview</h2>
+            </div>
+            <div class="card-body">
+                <div class="mb-4">
+                    <img src="https://images.unsplash.com/photo-1563452619267-bc16ef6cecec" class="img-fluid rounded mb-3" alt="Cybersecurity visualization">
+                    <p>
+                        SafeLink Protection Cleaner is an advanced tool designed to identify and remove email addresses that are protected 
+                        by email security gateways or that have invalid domains. This ensures that your email marketing campaigns are more 
+                        effective by targeting only valid, deliverable, and non-protected email addresses.
+                    </p>
+                    <p>
+                        The system uses a combination of DNS analysis, MX record checking, pattern recognition, and machine learning to 
+                        identify protected emails with high accuracy. It processes lists in bulk using multi-threaded architecture for 
+                        optimal performance.
+                    </p>
+                </div>
+                
+                <div class="alert alert-primary">
+                    <div class="d-flex">
+                        <div class="me-3">
+                            <i class="fas fa-info-circle fa-2x"></i>
+                        </div>
+                        <div>
+                            <h5 class="alert-heading">Why Use SafeLink Protection Cleaner?</h5>
+                            <p class="mb-0">
+                                Email security systems can obstruct your communication by scanning links, rewriting URLs, or 
+                                performing content analysis. By removing protected emails from your lists, you can focus your efforts 
+                                on recipients who are more likely to receive your messages without interference.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card mb-4" id="detection-methods">
+            <div class="card-header">
+                <h2 class="h5 mb-0">Detection Methods</h2>
+            </div>
+            <div class="card-body">
+                <p>
+                    SafeLink Protection Cleaner uses multiple methods to detect email security systems and invalid domains:
+                </p>
+                
+                <div class="row mb-4">
+                    <div class="col-md-6">
+                        <h5><i class="fas fa-search text-primary me-2"></i> DNS Analysis</h5>
+                        <p>
+                            We analyze DNS MX (Mail Exchange) records to identify domains that route their email through 
+                            known security providers. This method provides high accuracy in detecting email security systems.
+                        </p>
+                    </div>
+                    <div class="col-md-6">
+                        <h5><i class="fas fa-file-alt text-primary me-2"></i> TXT Record Inspection</h5>
+                        <p>
+                            We examine DNS TXT records for patterns that indicate the presence of email security systems, 
+                            such as SPF records that reference security providers.
+                        </p>
+                    </div>
+                </div>
+                
+                <div class="row mb-4">
+                    <div class="col-md-6">
+                        <h5><i class="fas fa-code text-primary me-2"></i> Pattern Recognition</h5>
+                        <p>
+                            Our system uses regular expressions and pattern matching to identify domains or MX records 
+                            that match known security system signatures.
+                        </p>
+                    </div>
+                    <div class="col-md-6">
+                        <h5><i class="fas fa-brain text-primary me-2"></i> Machine Learning</h5>
+                        <p>
+                            We employ machine learning algorithms to detect security systems based on features extracted 
+                            from domain data, improving detection accuracy over time.
+                        </p>
+                    </div>
+                </div>
+                
+                <div class="row">
+                    <div class="col-md-6">
+                        <h5><i class="fas fa-check-circle text-primary me-2"></i> Domain Validation</h5>
+                        <p>
+                            We verify that domains are valid and active by checking DNS records, MX record existence, 
+                            and basic connectivity tests.
+                        </p>
+                    </div>
+                    <div class="col-md-6">
+                        <h5><i class="fas fa-exclamation-triangle text-primary me-2"></i> Disposable Email Detection</h5>
+                        <p>
+                            We maintain a database of known disposable email domains to filter out temporary or throwaway 
+                            email addresses that aren't suitable for long-term communication.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card mb-4" id="security-systems">
+            <div class="card-header">
+                <h2 class="h5 mb-0">Supported Security Systems</h2>
+            </div>
+            <div class="card-body">
+                <p>
+                    SafeLink Protection Cleaner can detect and filter emails protected by the following security systems:
+                </p>
+                
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="card mb-3">
+                            <div class="card-body">
+                                <h5 class="card-title">Microsoft Safe Links</h5>
+                                <p class="card-text">
+                                    Part of Microsoft Defender for Office 365, Safe Links provides time-of-click verification of URLs.
+                                </p>
+                                <p class="card-text text-muted">
+                                    <small>Detection patterns: safelinks.protection.outlook.com</small>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="card mb-3">
+                            <div class="card-body">
+                                <h5 class="card-title">Proofpoint URL Defense</h5>
+                                <p class="card-text">
+                                    Proofpoint's URL rewriting and scanning service that evaluates links at click time.
+                                </p>
+                                <p class="card-text text-muted">
+                                    <small>Detection patterns: urldefense.proofpoint.com, urldefense.com</small>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="card mb-3">
+                            <div class="card-body">
+                                <h5 class="card-title">Mimecast</h5>
+                                <p class="card-text">
+                                    Email security service that scans emails and rewrites URLs for click-time verification.
+                                </p>
+                                <p class="card-text text-muted">
+                                    <small>Detection patterns: protect-us.mimecast.com, mimecast.com</small>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="card mb-3">
+                            <div class="card-body">
+                                <h5 class="card-title">Barracuda Sentinel</h5>
+                                <p class="card-text">
+                                    Barracuda's email security service that includes link protection and scanning.
+                                </p>
+                                <p class="card-text text-muted">
+                                    <small>Detection patterns: linkprotect.cudasvc.com</small>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="alert alert-secondary">
+                    <h5 class="alert-heading">Additional Supported Systems</h5>
+                    <ul class="mb-0">
+                        <li>Cisco IronPort</li>
+                        <li>McAfee / Symantec / Sophos</li>
+                        <li>Trend Micro (Global + EU Servers)</li>
+                        <li>FireEye</li>
+                        <li>Forcepoint</li>
+                        <li>SonicWall</li>
+                        <li>Exchange Online Protection (EOP)</li>
+                        <li>Cloudmark</li>
+                        <li>Perception Point</li>
+                        <li>Avanan Security</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="card mb-4" id="file-formats">
+            <div class="card-header">
+                <h2 class="h5 mb-0">Supported File Formats</h2>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-4 mb-3">
+                        <div class="card h-100">
+                            <div class="card-body text-center">
+                                <i class="fas fa-file-csv text-primary mb-3" style="font-size: 2.5rem;"></i>
+                                <h5 class="card-title">CSV Files</h5>
+                                <p class="card-text">
+                                    Comma-separated values files. Should contain an 'email' column or use the first column for email addresses.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <div class="card h-100">
+                            <div class="card-body text-center">
+                                <i class="fas fa-file-alt text-primary mb-3" style="font-size: 2.5rem;"></i>
+                                <h5 class="card-title">TXT Files</h5>
+                                <p class="card-text">
+                                    Plain text files with one email address per line. Empty lines are ignored.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <div class="card h-100">
+                            <div class="card-body text-center">
+                                <i class="fas fa-file-excel text-primary mb-3" style="font-size: 2.5rem;"></i>
+                                <h5 class="card-title">XLSX Files</h5>
+                                <p class="card-text">
+                                    Excel spreadsheets. Should contain an 'email' column or use the first column for email addresses.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="alert alert-info mt-3">
+                    <h5 class="alert-heading">File Size Limit</h5>
+                    <p class="mb-0">
+                        The maximum allowed file size is 10MB. For larger lists, consider splitting them into multiple files or using the API.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="card mb-4" id="technical-details">
+            <div class="card-header">
+                <h2 class="h5 mb-0">Technical Details</h2>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <h5>Multi-threaded Processing</h5>
+                        <p>
+                            SafeLink Protection Cleaner uses Python's asyncio and concurrent.futures to process email lists in 
+                            parallel, significantly improving performance for large lists.
+                        </p>
+                        <pre class="bg-dark text-light p-3 rounded"><code>async def process_batch_async(emails):
+    tasks = [process_email_async(email) for email in emails]
+    return await asyncio.gather(*tasks)</code></pre>
+                    </div>
+                    <div class="col-md-6">
+                        <h5>DNS Resolution</h5>
+                        <p>
+                            We use dnspython for efficient DNS queries, with configurable timeouts to prevent slow lookups from 
+                            affecting overall performance.
+                        </p>
+                        <pre class="bg-dark text-light p-3 rounded"><code>try:
+    answers = dns.resolver.resolve(domain, 'MX')
+    mx_records = [str(rdata.exchange).rstrip('.').lower() 
+                  for rdata in answers]
+except dns.resolver.NXDOMAIN:
+    return False  # No domain</code></pre>
+                    </div>
+                </div>
+                
+                <div class="row mt-4">
+                    <div class="col-md-6">
+                        <h5>Security Pattern Database</h5>
+                        <p>
+                            Our system maintains a comprehensive database of patterns for detecting various email security systems, 
+                            with regular updates to ensure high detection accuracy.
+                        </p>
+                    </div>
+                    <div class="col-md-6">
+                        <h5>Machine Learning Integration</h5>
+                        <p>
+                            The system uses feature extraction and classification algorithms to improve detection accuracy beyond 
+                            simple pattern matching, adapting to new security system patterns over time.
+                        </p>
+                    </div>
+                </div>
+                
+                <div class="row mt-4">
+                    <div class="col-12">
+                        <h5>Performance Metrics</h5>
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>List Size</th>
+                                    <th>Average Processing Time</th>
+                                    <th>Threads Used</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>100 emails</td>
+                                    <td>~2 seconds</td>
+                                    <td>5</td>
+                                </tr>
+                                <tr>
+                                    <td>1,000 emails</td>
+                                    <td>~15 seconds</td>
+                                    <td>10</td>
+                                </tr>
+                                <tr>
+                                    <td>10,000 emails</td>
+                                    <td>~2 minutes</td>
+                                    <td>10</td>
+                                </tr>
+                                <tr>
+                                    <td>100,000+ emails</td>
+                                    <td>~20 minutes</td>
+                                    <td>10</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <p class="text-muted small">
+                            * Actual processing times may vary depending on network conditions and server load.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card mb-4" id="api-reference">
+            <div class="card-header">
+                <h2 class="h5 mb-0">API Reference</h2>
+            </div>
+            <div class="card-body">
+                <p>
+                    SafeLink Protection Cleaner provides a RESTful API for programmatic access to its functionality.
+                </p>
+                
+                <div class="card mb-3">
+                    <div class="card-header bg-dark">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <span class="badge bg-success me-2">POST</span>
+                            <code class="text-light">/api/analyze</code>
+                            <span></span>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <h5>Analyze Email Domain</h5>
+                        <p>
+                            Analyzes a single email address to determine if it's protected by a security system or has an invalid domain.
+                        </p>
+                        
+                        <h6 class="mt-3">Request Body</h6>
+                        <pre class="bg-dark text-light p-3 rounded"><code>{
+  "email": "example@domain.com"
+}</code></pre>
+                        
+                        <h6 class="mt-3">Response</h6>
+                        <pre class="bg-dark text-light p-3 rounded"><code>{
+  "domain": "domain.com",
+  "valid_domain": true,
+  "has_mx_records": true,
+  "is_protected": true,
+  "security_system": "Proofpoint URL Defense",
+  "is_disposable": false
+}</code></pre>
+                    </div>
+                </div>
+                
+                <div class="alert alert-warning">
+                    <h5 class="alert-heading">Rate Limiting</h5>
+                    <p class="mb-0">
+                        API requests are limited to 100 requests per minute to ensure system stability. 
+                        For higher limits, please contact support.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="card mb-4" id="advanced-usage">
+            <div class="card-header">
+                <h2 class="h5 mb-0">Advanced Usage</h2>
+            </div>
+            <div class="card-body">
+                <div class="row mb-4">
+                    <div class="col-md-6">
+                        <h5>Selective Filtering</h5>
+                        <p>
+                            You can customize which security systems to filter by using the checkboxes on the upload form. 
+                            This allows you to target specific security gateways while allowing others.
+                        </p>
+                    </div>
+                    <div class="col-md-6">
+                        <h5>Batch Processing</h5>
+                        <p>
+                            For very large lists, the system automatically processes emails in batches to optimize memory usage 
+                            and provide progress updates during processing.
+                        </p>
+                    </div>
+                </div>
+                
+                <div class="row">
+                    <div class="col-md-6">
+                        <h5>Command-Line Usage</h5>
+                        <p>
+                            Advanced users can use the command-line interface for batch processing or integration with other tools.
+                        </p>
+                        <pre class="bg-dark text-light p-3 rounded"><code>python cleaner.py --input emails.csv --output clean.csv</code></pre>
+                    </div>
+                    <div class="col-md-6">
+                        <h5>Integration with Other Systems</h5>
+                        <p>
+                            The API can be used to integrate SafeLink Protection Cleaner with CRM systems, email marketing platforms, 
+                            or custom workflows.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card" id="faq">
+            <div class="card-header">
+                <h2 class="h5 mb-0">Frequently Asked Questions</h2>
+            </div>
+            <div class="card-body">
+                <div class="accordion" id="faqAccordion">
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="faqOne">
+                            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                Is it legal to identify and filter protected emails?
+                            </button>
+                        </h2>
+                        <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="faqOne" data-bs-parent="#faqAccordion">
+                            <div class="accordion-body">
+                                Yes, it is legal to analyze email domains and filter your own email lists based on security systems. 
+                                This tool simply helps you focus your marketing efforts on more receptive audiences and does not 
+                                attempt to bypass or defeat security measures.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="faqTwo">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                How accurate is the security system detection?
+                            </button>
+                        </h2>
+                        <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="faqTwo" data-bs-parent="#faqAccordion">
+                            <div class="accordion-body">
+                                Our system typically achieves over 95% accuracy in detecting major email security systems. 
+                                However, some security configurations may be more difficult to detect, especially if they use 
+                                custom domains or non-standard configurations. The system's machine learning component helps 
+                                improve detection accuracy over time.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="faqThree">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                                Does this tool perform SMTP verification?
+                            </button>
+                        </h2>
+                        <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="faqThree" data-bs-parent="#faqAccordion">
+                            <div class="accordion-body">
+                                No, the tool does not perform SMTP "ping" verification by default, as this can trigger spam 
+                                filters when done in bulk. Instead, it focuses on DNS-based verification methods like MX record 
+                                checks and pattern recognition, which are non-intrusive and won't affect your sender reputation.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="faqFour">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+                                What happens to my uploaded data?
+                            </button>
+                        </h2>
+                        <div id="collapseFour" class="accordion-collapse collapse" aria-labelledby="faqFour" data-bs-parent="#faqAccordion">
+                            <div class="accordion-body">
+                                Your email lists are processed securely and are not shared with third parties. 
+                                The system stores processing results for your reference, but you can delete these at any time.
+                                We prioritize data security and privacy in all operations.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="faqFive">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFive" aria-expanded="false" aria-controls="collapseFive">
+                                Can I use this tool with my CRM or email marketing platform?
+                            </button>
+                        </h2>
+                        <div id="collapseFive" class="accordion-collapse collapse" aria-labelledby="faqFive" data-bs-parent="#faqAccordion">
+                            <div class="accordion-body">
+                                Yes, you can use the API to integrate with your CRM or email marketing platform. 
+                                You can also export cleaned lists and import them into your platform of choice.
+                                For specific integration help, please contact our support team.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

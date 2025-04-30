@@ -1,0 +1,250 @@
+{% extends 'base.html' %}
+
+{% block title %}SafeLink Protection Cleaner - Advanced Email Security Analysis{% endblock %}
+
+{% block content %}
+<div class="row mb-5 align-items-center">
+    <div class="col-lg-6">
+        <h1 class="display-4 mb-4">SafeLink Protection Cleaner</h1>
+        <h2 class="text-muted h4 mb-4">Clean. Filter. Win. Your leads, optimized and ready.</h2>
+        <p class="lead mb-4">
+            An advanced email security analysis and cleaning system that automatically 
+            detects and removes email addresses associated with security gateways, 
+            ensuring only deliverable and non-obstructed emails remain in your list.
+        </p>
+        <div class="d-grid gap-2 d-md-flex justify-content-md-start">
+            <a href="#upload-section" class="btn btn-primary btn-lg px-4 me-md-2">
+                <i class="fas fa-upload me-2"></i> Upload Email List
+            </a>
+            <a href="{{ url_for('documentation') }}" class="btn btn-outline btn-lg px-4">
+                <i class="fas fa-book me-2"></i> Learn More
+            </a>
+        </div>
+    </div>
+    <div class="col-lg-6 mt-5 mt-lg-0">
+        <div class="card border-0 shadow-lg">
+            <img src="https://images.unsplash.com/photo-1550751827-4bd374c3f58b" class="card-img-top" alt="Cybersecurity visualization">
+            <div class="card-body">
+                <h5 class="card-title">Advanced Security Detection</h5>
+                <p class="card-text">
+                    Our system detects and filters emails protected by leading security systems 
+                    including Microsoft SafeLinks, Proofpoint, Mimecast, and many more.
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row mb-5">
+    <div class="col-12 text-center mb-4">
+        <h2 class="mb-3">Key Features</h2>
+        <p class="lead text-muted">
+            Our advanced system provides comprehensive protection detection and email list cleaning
+        </p>
+    </div>
+    
+    <div class="col-md-4 mb-4">
+        <div class="card h-100">
+            <div class="card-body">
+                <div class="text-center mb-3">
+                    <i class="fas fa-shield-virus text-primary" style="font-size: 3rem;"></i>
+                </div>
+                <h5 class="card-title text-center">Security System Detection</h5>
+                <p class="card-text">
+                    Automatically identifies emails protected by over 15 different security systems, 
+                    including Microsoft Safe Links, Proofpoint URL Defense, Mimecast, and more.
+                </p>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-4 mb-4">
+        <div class="card h-100">
+            <div class="card-body">
+                <div class="text-center mb-3">
+                    <i class="fas fa-filter text-primary" style="font-size: 3rem;"></i>
+                </div>
+                <h5 class="card-title text-center">Invalid Domain Filtering</h5>
+                <p class="card-text">
+                    Checks for invalid, expired, or disposable email domains using DNS MX record analysis,
+                    WHOIS status checks, and comprehensive domain validation.
+                </p>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-4 mb-4">
+        <div class="card h-100">
+            <div class="card-body">
+                <div class="text-center mb-3">
+                    <i class="fas fa-tachometer-alt text-primary" style="font-size: 3rem;"></i>
+                </div>
+                <h5 class="card-title text-center">Multi-threaded Processing</h5>
+                <p class="card-text">
+                    Process large email lists with blazing speed using our multi-threaded architecture
+                    and optimized algorithms for maximum performance.
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row mb-5">
+    <div class="col-md-6 mb-4">
+        <img src="https://images.unsplash.com/photo-1557200134-90327ee9fafa" class="img-fluid rounded" alt="Email filtering systems">
+    </div>
+    <div class="col-md-6 mb-4">
+        <h3 class="mb-4">Supported Security Systems</h3>
+        <div class="row">
+            <div class="col-6">
+                <ul class="list-unstyled">
+                    <li class="mb-2"><i class="fas fa-check-circle text-success me-2"></i> Microsoft Safe Links</li>
+                    <li class="mb-2"><i class="fas fa-check-circle text-success me-2"></i> Proofpoint URL Defense</li>
+                    <li class="mb-2"><i class="fas fa-check-circle text-success me-2"></i> Barracuda Sentinel</li>
+                    <li class="mb-2"><i class="fas fa-check-circle text-success me-2"></i> Mimecast</li>
+                    <li class="mb-2"><i class="fas fa-check-circle text-success me-2"></i> Cisco IronPort</li>
+                    <li class="mb-2"><i class="fas fa-check-circle text-success me-2"></i> McAfee / Symantec</li>
+                    <li class="mb-2"><i class="fas fa-check-circle text-success me-2"></i> Sophos</li>
+                    <li class="mb-2"><i class="fas fa-check-circle text-success me-2"></i> Trend Micro</li>
+                </ul>
+            </div>
+            <div class="col-6">
+                <ul class="list-unstyled">
+                    <li class="mb-2"><i class="fas fa-check-circle text-success me-2"></i> FireEye</li>
+                    <li class="mb-2"><i class="fas fa-check-circle text-success me-2"></i> Forcepoint</li>
+                    <li class="mb-2"><i class="fas fa-check-circle text-success me-2"></i> SonicWall</li>
+                    <li class="mb-2"><i class="fas fa-check-circle text-success me-2"></i> Exchange Online Protection</li>
+                    <li class="mb-2"><i class="fas fa-check-circle text-success me-2"></i> Cloudmark</li>
+                    <li class="mb-2"><i class="fas fa-check-circle text-success me-2"></i> Perception Point</li>
+                    <li class="mb-2"><i class="fas fa-check-circle text-success me-2"></i> Avanan Security</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="upload-section" class="row mb-5">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <h3 class="mb-0">Upload Email List</h3>
+                <span class="badge bg-primary">CSV, TXT, XLSX</span>
+            </div>
+            <div class="card-body">
+                <form id="upload-form" action="{{ url_for('upload_file') }}" method="post" enctype="multipart/form-data">
+                    <div class="mb-4">
+                        <div id="drop-zone" class="dropzone">
+                            <div class="dz-message">
+                                <i class="fas fa-cloud-upload-alt mb-3" style="font-size: 3rem;"></i>
+                                <h4>Drop email list file here</h4>
+                                <p class="text-muted">or click to select</p>
+                                <p id="file-name" class="mt-3"></p>
+                            </div>
+                            <input type="file" id="emailList" name="emailList" class="d-none" accept=".csv,.txt,.xlsx">
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="1" id="filter-safelinks" name="filter-safelinks" checked>
+                            <label class="form-check-label" for="filter-safelinks">
+                                Filter Microsoft SafeLinks
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="1" id="filter-proofpoint" name="filter-proofpoint" checked>
+                            <label class="form-check-label" for="filter-proofpoint">
+                                Filter Proofpoint URL Defense
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="1" id="filter-mimecast" name="filter-mimecast" checked>
+                            <label class="form-check-label" for="filter-mimecast">
+                                Filter Mimecast
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="1" id="filter-invalid" name="filter-invalid" checked>
+                            <label class="form-check-label" for="filter-invalid">
+                                Filter Invalid Domains
+                            </label>
+                        </div>
+                    </div>
+                    <div class="d-grid">
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-broom me-2"></i> Process Email List
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row mb-5">
+    <div class="col-12 text-center mb-4">
+        <h2 class="mb-3">Advanced Analysis Dashboard</h2>
+        <p class="lead text-muted">
+            Get detailed insights and visualizations about your email lists
+        </p>
+    </div>
+    
+    <div class="col-12">
+        <div class="card">
+            <img src="https://images.unsplash.com/photo-1542744173-05336fcc7ad4" class="card-img-top" alt="Data analysis dashboard">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-4 mb-3">
+                        <h5><i class="fas fa-chart-pie me-2 text-primary"></i> Security System Distribution</h5>
+                        <p class="text-muted">
+                            Visualize which security systems are protecting emails in your list
+                        </p>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <h5><i class="fas fa-chart-bar me-2 text-primary"></i> Domain Analysis</h5>
+                        <p class="text-muted">
+                            Analyze the distribution of domains in your email list
+                        </p>
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <h5><i class="fas fa-file-export me-2 text-primary"></i> Export Options</h5>
+                        <p class="text-muted">
+                            Export your clean list in multiple formats with detailed reports
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row mb-5">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h3 class="mb-0">Domain Analyzer</h3>
+            </div>
+            <div class="card-body">
+                <form id="domain-analyzer-form">
+                    <div class="mb-3">
+                        <label for="email-to-analyze" class="form-label">Enter an email address to analyze:</label>
+                        <div class="input-group">
+                            <input type="email" class="form-control" id="email-to-analyze" placeholder="example@domain.com">
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fas fa-search me-2"></i> Analyze
+                            </button>
+                        </div>
+                        <div class="form-text text-muted">
+                            Check if an email address is protected by a security system
+                        </div>
+                    </div>
+                </form>
+                <div id="analyzer-results" class="mt-4"></div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/visualization.js') }}"></script>
+{% endblock %}

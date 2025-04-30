@@ -1,0 +1,291 @@
+{% extends 'base.html' %}
+
+{% block title %}Results - SafeLink Protection Cleaner{% endblock %}
+
+{% block content %}
+<div class="row mb-4">
+    <div class="col-12">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="{{ url_for('index') }}">Home</a></li>
+                <li class="breadcrumb-item"><a href="{{ url_for('dashboard') }}">Dashboard</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Results</li>
+            </ol>
+        </nav>
+        <h1 class="mb-0">Email List Analysis Results</h1>
+        <p class="text-muted">List: {{ email_list.filename }}</p>
+    </div>
+</div>
+
+<!-- Processing Status -->
+{% if job and job.status != 'completed' %}
+<div class="row mb-4">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <h5 class="mb-0">Processing Status</h5>
+                <span class="badge bg-{{ 'primary' if job.status == 'processing' else 'warning' if job.status == 'queued' else 'danger' }}">
+                    {{ job.status|capitalize }}
+                </span>
+            </div>
+            <div class="card-body">
+                <p>Please wait while we analyze your email list...</p>
+                <div class="progress mb-3">
+                    <div id="job-progress" class="progress-bar" role="progressbar" style="width: {{ job.progress }}%;" 
+                        aria-valuenow="{{ job.progress }}" aria-valuemin="0" aria-valuemax="100" data-job-id="{{ job.id }}"></div>
+                </div>
+                <div class="d-flex justify-content-between">
+                    <span class="text-muted">Progress: {{ job.progress }}%</span>
+                    <span class="text-muted">Status: <span id="job-status">{{ job.status|capitalize }}</span></span>
+                </div>
+                
+                {% if job.status == 'failed' and job.error %}
+                <div class="alert alert-danger mt-3">
+                    <strong>Error:</strong> {{ job.error }}
+                </div>
+                {% endif %}
+                
+                <div class="text-center mt-4">
+                    <div class="spinner-border text-primary" role="status">
+                        <span class="visually-hidden">Loading...</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}
+
+<!-- Results Summary (only shown when processing is complete) -->
+{% if email_list.processed %}
+<div class="row mb-4">
+    <div class="col-12">
+        <div class="result-summary">
+            <div class="card result-stat">
+                <div class="result-stat-value">{{ email_list.original_count }}</div>
+                <div class="result-stat-label">Original Emails</div>
+            </div>
+            <div class="card result-stat">
+                <div class="result-stat-value text-success">{{ email_list.cleaned_count }}</div>
+                <div class="result-stat-label">Clean Emails</div>
+            </div>
+            <div class="card result-stat">
+                <div class="result-stat-value text-danger">{{ email_list.original_count - email_list.cleaned_count }}</div>
+                <div class="result-stat-label">Removed Emails</div>
+            </div>
+            <div class="card result-stat">
+                <div class="result-stat-value text-warning">
+                    {% set removal_rate = ((email_list.original_count - email_list.cleaned_count) / email_list.original_count * 100) if email_list.original_count > 0 else 0 %}
+                    {{ "{:.1f}".format(removal_rate) }}%
+                </div>
+                <div class="result-stat-label">Removal Rate</div>
+            </div>
+            <div class="card result-stat">
+                <div class="result-stat-value text-info">{{ "{:.2f}".format(email_list.processing_time) }}s</div>
+                <div class="result-stat-label">Processing Time</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Export Options and Visualizations -->
+<div class="row mb-4">
+    <div class="col-md-8 mb-4">
+        <div class="card">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <h5 class="mb-0">Security Systems Detected</h5>
+                <span class="badge bg-primary">{{ security_data|length }} Systems</span>
+            </div>
+            <div class="card-body">
+                <div id="security-systems-chart" class="chart-container"></div>
+                <script id="security-systems-data" type="application/json">{{ security_data|safe }}</script>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4 mb-4">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="mb-0">Domain Distribution</h5>
+            </div>
+            <div class="card-body">
+                <div id="domain-distribution-chart" class="chart-container"></div>
+                <script id="domain-distribution-data" type="application/json">{{ domain_data|safe }}</script>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row mb-4">
+    <div class="col-md-4 mb-4">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="mb-0">Export Cleaned List</h5>
+            </div>
+            <div class="card-body">
+                <p>Download your cleaned email list in various formats:</p>
+                <div class="d-grid gap-2">
+                    <a href="{{ url_for('export', list_id=email_list.id, format='csv') }}" class="btn btn-outline">
+                        <i class="fas fa-file-csv me-2"></i> Export as CSV
+                    </a>
+                    <a href="{{ url_for('export', list_id=email_list.id, format='json') }}" class="btn btn-outline">
+                        <i class="fas fa-file-code me-2"></i> Export as JSON
+                    </a>
+                    <a href="{{ url_for('export', list_id=email_list.id, format='xlsx') }}" class="btn btn-outline">
+                        <i class="fas fa-file-excel me-2"></i> Export as Excel
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-8 mb-4">
+        <div class="card">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <h5 class="mb-0">Machine Learning Insights</h5>
+                <span class="badge bg-primary">Advanced Analysis</span>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <h6><i class="fas fa-lightbulb text-warning me-2"></i> Pattern Recognition</h6>
+                        <p class="text-muted small">
+                            Our ML algorithms detected common patterns in the security systems protecting your email list.
+                            We've identified key security gateways and their prevalence in your data.
+                        </p>
+                    </div>
+                    <div class="col-md-6">
+                        <h6><i class="fas fa-brain text-primary me-2"></i> Recommendation Engine</h6>
+                        <p class="text-muted small">
+                            Based on the analysis, we recommend focusing on non-protected domains for better deliverability
+                            and open rates. Consider segmenting your list by security system for targeted approaches.
+                        </p>
+                    </div>
+                </div>
+                <div class="mt-3">
+                    <div class="d-flex align-items-center">
+                        <div class="flex-grow-1">
+                            <div class="progress" style="height: 8px;">
+                                <div class="progress-bar bg-success" role="progressbar" style="width: {{ email_list.cleaned_count / email_list.original_count * 100 }}%;" aria-valuenow="{{ email_list.cleaned_count / email_list.original_count * 100 }}" aria-valuemin="0" aria-valuemax="100"></div>
+                            </div>
+                        </div>
+                        <span class="ms-3 text-muted">{{ "{:.1f}".format(email_list.cleaned_count / email_list.original_count * 100) }}% Clean Rate</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Removed Emails Sample -->
+<div class="row mb-4">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <h5 class="mb-0">Sample of Removed Emails</h5>
+                <span class="badge bg-warning">{{ removed_emails|length }} Shown</span>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>Email Address</th>
+                                <th>Domain</th>
+                                <th>Reason for Removal</th>
+                                <th>Security System</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for email in removed_emails %}
+                            <tr>
+                                <td>{{ email.address }}</td>
+                                <td>{{ email.domain }}</td>
+                                <td>
+                                    {% if 'Invalid' in email.reason %}
+                                    <span class="badge bg-danger">{{ email.reason }}</span>
+                                    {% elif 'Disposable' in email.reason %}
+                                    <span class="badge bg-warning">{{ email.reason }}</span>
+                                    {% elif 'No MX' in email.reason %}
+                                    <span class="badge bg-info">{{ email.reason }}</span>
+                                    {% else %}
+                                    <span class="badge bg-primary">{{ email.reason }}</span>
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    {% if email.security_system %}
+                                    <span class="text-muted">{{ email.security_system }}</span>
+                                    {% else %}
+                                    <span class="text-muted">N/A</span>
+                                    {% endif %}
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Technical Details -->
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="mb-0">Technical Details</h5>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <h6 class="mb-3">Process Information</h6>
+                        <ul class="list-group mb-4">
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                <span>Process ID</span>
+                                <span class="badge bg-secondary">{{ job.id if job else 'N/A' }}</span>
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                <span>Started At</span>
+                                <span class="badge bg-secondary">{{ job.started_at.strftime('%Y-%m-%d %H:%M:%S') if job and job.started_at else 'N/A' }}</span>
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                <span>Completed At</span>
+                                <span class="badge bg-secondary">{{ job.completed_at.strftime('%Y-%m-%d %H:%M:%S') if job and job.completed_at else 'N/A' }}</span>
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                <span>Processing Time</span>
+                                <span class="badge bg-secondary">{{ "{:.2f}".format(email_list.processing_time) }}s</span>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="col-md-6">
+                        <h6 class="mb-3">Scan Details</h6>
+                        <ul class="list-group">
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                <span>DNS Lookups</span>
+                                <span class="badge bg-secondary">{{ email_list.original_count }}</span>
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                <span>MX Records Checked</span>
+                                <span class="badge bg-secondary">{{ email_list.original_count }}</span>
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                <span>Security Systems Detected</span>
+                                <span class="badge bg-secondary">{{ security_data|length }}</span>
+                            </li>
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                <span>Invalid Domains</span>
+                                <span class="badge bg-secondary">{{ removed_emails|selectattr('reason', 'equalto', 'Invalid Domain')|list|length }}</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/visualization.js') }}"></script>
+{% endblock %}

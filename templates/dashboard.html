@@ -1,0 +1,186 @@
+{% extends 'base.html' %}
+
+{% block title %}Dashboard - SafeLink Protection Cleaner{% endblock %}
+
+{% block content %}
+<div class="row mb-4">
+    <div class="col-12">
+        <h1 class="mb-0">Analytics Dashboard</h1>
+        <p class="text-muted">Overview of your email security analysis</p>
+    </div>
+</div>
+
+<div class="row mb-4">
+    <div class="col-md-3 mb-3">
+        <div class="card stat-card">
+            <div class="stat-value text-primary">{{ total_processed }}</div>
+            <div class="stat-label">Lists Processed</div>
+        </div>
+    </div>
+    <div class="col-md-3 mb-3">
+        <div class="card stat-card">
+            <div class="stat-value">{{ total_emails }}</div>
+            <div class="stat-label">Total Emails</div>
+        </div>
+    </div>
+    <div class="col-md-3 mb-3">
+        <div class="card stat-card">
+            <div class="stat-value text-success">{{ total_cleaned }}</div>
+            <div class="stat-label">Clean Emails</div>
+        </div>
+    </div>
+    <div class="col-md-3 mb-3">
+        <div class="card stat-card">
+            <div class="stat-value text-danger">{{ "{:.1f}".format(removal_rate) }}%</div>
+            <div class="stat-label">Removal Rate</div>
+        </div>
+    </div>
+</div>
+
+<div class="row mb-4">
+    <div class="col-md-8 mb-4">
+        <div class="card">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <h5 class="mb-0">Security Systems Detection</h5>
+                <span class="badge bg-primary">Top Systems</span>
+            </div>
+            <div class="card-body">
+                <div id="security-systems-chart" class="chart-container"></div>
+                <script id="security-systems-data" type="application/json">{{ security_data|safe }}</script>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4 mb-4">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="mb-0">Removal Rate</h5>
+            </div>
+            <div class="card-body text-center">
+                <div id="removal-rate-gauge" data-rate="{{ "{:.1f}".format(removal_rate) }}"></div>
+                <div class="mt-3">
+                    <div class="d-flex justify-content-between text-muted">
+                        <small>Low</small>
+                        <small>Medium</small>
+                        <small>High</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row mb-4">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <h5 class="mb-0">Recent Email Lists</h5>
+                <a href="#" class="btn btn-sm btn-outline">View All</a>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>Filename</th>
+                                <th>Date</th>
+                                <th>Original Count</th>
+                                <th>Cleaned Count</th>
+                                <th>Removal Rate</th>
+                                <th>Processing Time</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for list in recent_lists %}
+                            <tr>
+                                <td>{{ list.filename }}</td>
+                                <td>{{ list.created_at.strftime('%Y-%m-%d %H:%M') }}</td>
+                                <td>{{ list.original_count }}</td>
+                                <td>{{ list.cleaned_count }}</td>
+                                <td>
+                                    {% set removal_rate = ((list.original_count - list.cleaned_count) / list.original_count * 100) if list.original_count > 0 else 0 %}
+                                    <div class="d-flex align-items-center">
+                                        <div class="progress me-2" style="width: 80px; height: 8px;">
+                                            <div class="progress-bar bg-{{ 'success' if removal_rate < 30 else 'warning' if removal_rate < 70 else 'danger' }}" 
+                                                role="progressbar" 
+                                                style="width: {{ removal_rate }}%;" 
+                                                aria-valuenow="{{ removal_rate }}" 
+                                                aria-valuemin="0" 
+                                                aria-valuemax="100"></div>
+                                        </div>
+                                        {{ "{:.1f}".format(removal_rate) }}%
+                                    </div>
+                                </td>
+                                <td>{{ "{:.2f}".format(list.processing_time) }}s</td>
+                                <td>
+                                    <a href="{{ url_for('results', list_id=list.id) }}" class="btn btn-sm btn-outline" data-bs-toggle="tooltip" title="View Results">
+                                        <i class="fas fa-eye"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-12 mb-4">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="mb-0">System Status</h5>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="d-flex align-items-center mb-3">
+                            <div class="me-3">
+                                <span class="badge bg-success p-2 rounded-circle">
+                                    <i class="fas fa-check"></i>
+                                </span>
+                            </div>
+                            <div>
+                                <h6 class="mb-0">Security Pattern Database</h6>
+                                <small class="text-muted">Up to date</small>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="d-flex align-items-center mb-3">
+                            <div class="me-3">
+                                <span class="badge bg-success p-2 rounded-circle">
+                                    <i class="fas fa-check"></i>
+                                </span>
+                            </div>
+                            <div>
+                                <h6 class="mb-0">DNS Resolution</h6>
+                                <small class="text-muted">Operational</small>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="d-flex align-items-center mb-3">
+                            <div class="me-3">
+                                <span class="badge bg-success p-2 rounded-circle">
+                                    <i class="fas fa-check"></i>
+                                </span>
+                            </div>
+                            <div>
+                                <h6 class="mb-0">Processing Engine</h6>
+                                <small class="text-muted">Running optimally</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/visualization.js') }}"></script>
+{% endblock %}
